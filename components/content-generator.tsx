@@ -7,20 +7,23 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
-import { Loader2 } from "lucide-react"
+import { Loader2, Video } from "lucide-react"
 import { ScriptDisplay } from "@/components/script-display"
 import { ImageGallery } from "@/components/image-gallery"
 import { AudioPlayer } from "@/components/audio-player"
 import { generateContent } from "@/app/actions"
+import VideoGenerator from "./video-generator"
+
+export interface ContentResultsProps {
+  script: string
+  imagePrompts: string[]
+}
 
 export function ContentGenerator() {
   const [topic, setTopic] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const [result, setResult] = useState<{
-    script: string
-    imagePrompts: String[]
-  } | null>(null)
+  const [result, setResult] = useState<ContentResultsProps | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -79,6 +82,7 @@ export function ContentGenerator() {
           <ScriptDisplay script={result.script} />
           <ImageGallery imagePrompts={result.imagePrompts} />
           <AudioPlayer text={result.script} />
+          <VideoGenerator script={result.script} imagePrompts={result.imagePrompts} />
         </div>
       )}
     </div>
